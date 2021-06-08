@@ -7,13 +7,11 @@ public class HexagonGrid : MonoBehaviour
     public GameObject PrefabHexagon;
     public RectTransform TransformGridParent;
 
-    public int GridX = 8;
-    public int GridY = 9;
+    [Tooltip("Grid dimention")]
+    public Vector2Int GridSize = new Vector2Int(8,9);
+
+    [Tooltip("Space between hexagons")]
     public int NodeSpace = 4;
-
-    public Vector2 NodeSize;
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -30,28 +28,19 @@ public class HexagonGrid : MonoBehaviour
     private void CreateHexagonGrid()
     {
         RectTransform prefabRectTransform = PrefabHexagon.GetComponent<RectTransform>();
+        Vector2 nodeSize = prefabRectTransform.sizeDelta + Vector2.one * NodeSpace;
+        Vector2 GridLength = new Vector2(nodeSize.x * (0.25f + 0.75f * GridSize.x), nodeSize.y * ((GridSize.x > 1 ? 0.5f : 0) + GridSize.y));
 
-        float prefabWidth = prefabRectTransform.sizeDelta.x+ NodeSpace;
-        float prefabHeight = prefabRectTransform.sizeDelta.y+ NodeSpace;
-
-        Vector2 GridMagnetude = new Vector2(prefabWidth*(0.25f+0.75f*GridX), prefabHeight*(0.5f+GridY));
-
-        Debug.Log("nodeSizeX : "+ GridMagnetude.x + "  nodeSizeY : "+ GridMagnetude.y);
-
-        for (int y = 0; y < GridY; y++)
+        for (int y = 0; y < GridSize.y; y++)
         {
-            for (int x = 0; x < GridX; x++)
+            for (int x = 0; x < GridSize.x; x++)
             {
+                Vector2 nodePos = new Vector2((x * nodeSize.x * 0.75f), (((x % 2) * nodeSize.y * 0.5f) + (y * nodeSize.y)));
+                Vector2 orginOfset = (GridLength - nodeSize) / 2;  
 
-                float posX = (x * prefabWidth * 0.75f) - ((GridMagnetude.x-prefabWidth)/2);
-                float posY = (((x % 2) * prefabHeight * 0.5f) + (y * prefabHeight)) - ((GridMagnetude.y-prefabHeight)/2);
-
-            
-                Instantiate(PrefabHexagon, TransformGridParent).GetComponent<RectTransform>().anchoredPosition = new Vector3(posX, posY);
+                Instantiate(PrefabHexagon, TransformGridParent).GetComponent<RectTransform>().anchoredPosition = nodePos - orginOfset;
             }
         }
-
-
     }
 
 }
