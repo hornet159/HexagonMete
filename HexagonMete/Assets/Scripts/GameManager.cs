@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public HexagonGrid hexagonGrid;
+    public TripleHexagonPointer tripleHexagonPointer;
+
+    public GameOptions gameOptions;
+
+
+    public void Awake()
     {
-        
+        hexagonGrid.Init(this);
+        tripleHexagonPointer.Init(this);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
