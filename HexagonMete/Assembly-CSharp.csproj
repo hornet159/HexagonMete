@@ -59,17 +59,17 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\MoveScore.cs" />
-    <Compile Include="Assets\Scripts\TopPanel.cs" />
-    <Compile Include="Assets\Scripts\Hexagon.cs" />
-    <Compile Include="Assets\Scripts\Constants.cs" />
-    <Compile Include="Assets\Scripts\TripleHexagon.cs" />
-    <Compile Include="Assets\Scripts\GameOptions.cs" />
-    <Compile Include="Assets\Scripts\TripleHexagonPointer.cs" />
-    <Compile Include="Assets\Scripts\HexagonGrid.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\Touch.cs" />
-    <Compile Include="Assets\Scripts\CustomBehaviour.cs" />
+    <Compile Include="Assets\Scripts\GameElements\MoveScore.cs" />
+    <Compile Include="Assets\Scripts\UI\TopPanel.cs" />
+    <Compile Include="Assets\Scripts\GameElements\Hexagon.cs" />
+    <Compile Include="Assets\Scripts\Data\Constants.cs" />
+    <Compile Include="Assets\Scripts\GameElements\TripleHexagon.cs" />
+    <Compile Include="Assets\Scripts\Data\GameOptions.cs" />
+    <Compile Include="Assets\Scripts\GameElements\TripleHexagonPointer.cs" />
+    <Compile Include="Assets\Scripts\GameElements\HexagonGrid.cs" />
+    <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Utilities\Touch.cs" />
+    <Compile Include="Assets\Scripts\Utilities\CustomBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
