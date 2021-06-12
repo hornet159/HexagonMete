@@ -14,16 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HexagonsColors:
   - index: 0
-    color: {r: 0.3718593, g: 1, b: 0, a: 1}
+    color: {r: 0.1764706, g: 0.7843138, b: 0.427451, a: 1}
   - index: 1
-    color: {r: 1, g: 0.21226418, b: 0.21226418, a: 1}
+    color: {r: 0.8862746, g: 0.2901961, b: 0.23529413, a: 1}
   - index: 2
-    color: {r: 0.97404873, g: 1, b: 0, a: 1}
+    color: {r: 0.9176471, g: 0.7490196, b: 0.054901965, a: 1}
   - index: 3
-    color: {r: 0.9172354, g: 0, b: 1, a: 1}
+    color: {r: 0.5921569, g: 0.3372549, b: 0.69803923, a: 1}
   - index: 4
-    color: {r: 0, g: 0.5224285, b: 1, a: 1}
+    color: {r: 0.20000002, g: 0.5803922, b: 0.8470589, a: 1}
   - index: 5
-    color: {r: 1, g: 0.43697512, b: 0, a: 1}
-  - index: 6
-    color: {r: 1, g: 1, b: 1, a: 1}
+    color: {r: 0.87843144, g: 0.48235297, b: 0.12941177, a: 1}
+  HexagonPoint: 5
+  PointPerBomb: 1000
+  GridSize: {x: 8, y: 9}
+  HexagonSpace: 4

@@ -4,13 +4,19 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: 2969338068595439429
-    second: HexBase
+    second: HexagonGameSheet_0
   - first:
       213: -7805284744671917551
-    second: HexBaseShadow
+    second: HexagonGameSheet_1
   - first:
       213: 5715067944930297587
-    second: HexGroup
+    second: HexagonGameSheet_2
+  - first:
+      213: 6801471136912693880
+    second: BombShadow
+  - first:
+      213: 8198839794564469947
+    second: BombBase
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -32,6 +38,7 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -40,9 +47,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -63,9 +70,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -108,11 +118,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HexBase
+      name: HexagonGameSheet_0
       rect:
         serializedVersion: 2
         x: 13
-        y: 12
+        y: 11
         width: 158
         height: 136
       alignment: 0
@@ -129,13 +139,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HexBaseShadow
+      name: HexagonGameSheet_1
       rect:
         serializedVersion: 2
         x: 182
-        y: 11
+        y: 8
         width: 158
-        height: 136
+        height: 139
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,15 +160,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HexGroup
+      name: HexagonGameSheet_2
       rect:
         serializedVersion: 2
         x: 362
-        y: 12
+        y: 11
         width: 307
         height: 299
-      alignment: 9
-      pivot: {x: 0.4312296, y: 0.5}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -166,6 +176,48 @@ TextureImporter:
       bones: []
       spriteID: 3f6cac42400005f40800000000000000
       internalID: 5715067944930297587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombShadow
+      rect:
+        serializedVersion: 2
+        x: 862
+        y: 11
+        width: 114
+        height: 117
+      alignment: 9
+      pivot: {x: 0.48505977, y: 0.47088474}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87ad0c996fda36e50800000000000000
+      internalID: 6801471136912693880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombBase
+      rect:
+        serializedVersion: 2
+        x: 686
+        y: 9
+        width: 155
+        height: 135
+      alignment: 9
+      pivot: {x: 0.4285743, y: 0.4936919}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb41a559a5128c170800000000000000
+      internalID: 8198839794564469947
       vertices: []
       indices: 
       edges: []

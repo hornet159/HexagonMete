@@ -7,13 +7,20 @@ public class Constants
 
 }
 
-
-public enum HexagonDirections
+public enum HexagonType:int
 {
-    Up,
-    UpRight,
-    DownRight,
-    Down,
-    DownLeft,
-    UpLeft,
+    NORMAL,
+    BOMB
+}
+
+
+public enum HexagonDirections:int
+{
+    Up = 0,
+    UpRight = 1,
+    DownRight = 2,
+    Down = 3,
+    DownLeft = 4,
+    UpLeft = 5,
+    Max = 6
 }

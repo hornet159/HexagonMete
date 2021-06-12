@@ -2,46 +2,150 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class TripleHexagonPointer : CustomBehaviour
 {
+    public event Action ActionOnSuccesMove;
+
     public GameObject gameObjectPointer;
+    public Transform selectedHexagonsParent;
+    public Transform transfromBorder;
+    public Touch touch;
+    public float touchDistanceSqr = 4;
 
 
+    private TripleHexagon mCurrentTripleHexagon;
+    private bool mIsRotateAnimActive;
+    private bool mIsRotateAnimCanPlay;
+    private bool mIsClockwise;
+    private Vector2 mVectorOrginToTouch;
     public override void Init(GameManager gameManager)
     {
         base.Init(gameManager);
-        gameObjectPointer.SetActive(false);
-
+        Input.simulateMouseWithTouches = true;
+        touch.actionOnTouchDelta += OnTouchDelta;
+        touch.actionOnTouchDown += OnTouchDown;
     }
 
-    public void SetPosition(Vector2 position, bool isRight)
+    public void SetPointerVisibility(bool isVisibale)
     {
-        gameObjectPointer.SetActive(true);
-        rectTransform.anchoredPosition = position;
-        rectTransform.eulerAngles = isRight ? Vector3.zero : Vector3.forward * 60;
+        gameObjectPointer.SetActive(isVisibale);
+
     }
 
-
-
-
-
-    // Update is called once per frame
-    void Update()
+    public void SelectTripleHexagon(TripleHexagon tripleHexagon)
     {
+        if (mIsRotateAnimActive || !gameObjectPointer.activeSelf)
+            return;
 
+        if (mCurrentTripleHexagon != null)
+            mCurrentTripleHexagon.SetHexagonsParent(GameManager.hexagonGrid.transformHexagonsParent);
 
-
-            //  Vector3 screenPoint = Input.mousePosition;
-            //  screenPoint.z = 10.0f;
-            //     transform.position = Camera.main.screet(screenPoint);
-
-            // Debug.Log(Input.mousePosition + mouseOrginOfset);
-
-            //   Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(screenPoint), ve)
-        
-
-
-        // Physics2D.RaycastAll()
+        SetPointerVisibility(true);
+        SetPosition(tripleHexagon.rectTransform.anchoredPosition, tripleHexagon.isRight);
+        tripleHexagon.SetHexagonsParent(selectedHexagonsParent);
+        mCurrentTripleHexagon = tripleHexagon;
     }
+
+    public void ReselectCurentTripleHexagon()
+    {
+        if (mCurrentTripleHexagon != null)
+        {
+            gameObjectPointer.SetActive(true);
+            mCurrentTripleHexagon.SetHexagonsParent(GameManager.hexagonGrid.transformHexagonsParent);
+            SetPointerVisibility(true);
+            SetPosition(mCurrentTripleHexagon.rectTransform.anchoredPosition, mCurrentTripleHexagon.isRight);
+            mCurrentTripleHexagon.SetHexagonsParent(selectedHexagonsParent);
+        }
+    }
+
+    private void SetPosition(Vector3 anchoredPos, bool isRight)
+    {
+        rectTransform.anchoredPosition = anchoredPos;
+        transfromBorder.eulerAngles = isRight ? Vector3.zero : Vector3.forward * 60;
+    }
+
+    public IEnumerator IRotateAnim(bool isClockwise)
+    {
+        mIsRotateAnimActive = true;
+        float stepTime = 0.2f;
+        float rotateAngle = 120 * (isClockwise ? -1 : 1);
+        float timer = 0;
+        float progress;
+        List<List<Hexagon>> explodedHexGroups;
+        Vector3 startAnlge;
+
+        for (int i = 0; i < 3; i++)
+        {
+            timer = timer % stepTime;
+            progress = 0;
+            startAnlge = transform.eulerAngles;
+            while (progress < 1)
+            {
+                progress = Mathf.Clamp01(timer / stepTime);
+                transform.eulerAngles = new Vector3(0, 0, startAnlge.z + (rotateAngle * progress));
+                yield return null;
+                timer += Time.deltaTime;
+            }
+
+            mCurrentTripleHexagon.SwitchRotatedHexagons(isClockwise);
+            explodedHexGroups = GameManager.hexagonGrid.ControlAllTripleHexagonsList();
+
+            if (explodedHexGroups.Count > 0)
+            {
+                SetPointerVisibility(false);
+                ActionOnSuccesMove?.Invoke();
+
+                if (GameManager.IsGameOver)
+                {
+                    yield break;
+                }
+
+                yield return new WaitForSeconds(0.1f);
+       
+                mCurrentTripleHexagon.SetHexagonsParent(GameManager.hexagonGrid.transformHexagonsParent);
+
+                foreach (var hexGroupList in explodedHexGroups)
+                {
+                    foreach (var item in hexGroupList)
+                    {
+                        item.Explode();
+                    }
+                }
+
+                GameManager.hexagonGrid.RemoveExplodedHexagons(explodedHexGroups);
+
+                yield return StartCoroutine(GameManager.hexagonGrid.IAllHexagonFallAnim());
+
+                break;
+            }
+              
+        }
+       
+
+        mIsRotateAnimActive = false;
+    }
+
+    #region Events
+
+    private void OnTouchDelta(Vector2 delta)
+    {
+        if (delta.sqrMagnitude > 1f && mIsRotateAnimCanPlay)
+        {
+            mIsClockwise = Vector3.Cross(mVectorOrginToTouch, delta).z < 0;
+            StartCoroutine(IRotateAnim(mIsClockwise));
+            mIsRotateAnimCanPlay = false;
+        }
+    }
+
+    private void OnTouchDown(Vector2 position)
+    {
+        Vector2 touchWordPos = Camera.main.ScreenToWorldPoint(position);
+        mVectorOrginToTouch = touchWordPos - (Vector2)rectTransform.position;
+        bool isNearTouch = mVectorOrginToTouch.sqrMagnitude < touchDistanceSqr;
+        mIsRotateAnimCanPlay = isNearTouch && !mIsRotateAnimActive;
+    }
+
+    #endregion
 }
